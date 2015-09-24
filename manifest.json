@@ -1,0 +1,8 @@
+{
+  "name": "Latex Evernote Extension",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_title": "Basic tool setup"
+  }
+}
