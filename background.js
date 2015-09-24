@@ -1,38 +1,38 @@
-// omnibox
-chrome.omnibox.onInputChanged.addListener(function(text, suggest) {
-  suggest([
-    {content: "color-divs", description: "Make everything red"}
-  ]);
-});
-chrome.omnibox.onInputEntered.addListener(function(text) {
-  if(text == "color-divs") colorDivs();
-});
-// listening for an event / one-time requests
-// coming from the popup
-chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-  switch(request.type) {
-    case "color-divs":
-      colorDivs();
-      break;
+var wind = null, requestingWindow = null;
+var fs = null;
+
+function onWindowLoad() {
+  wind = this;
+  if (fs) {
+    this.onCreatedFileSystem(fs);
+  } else {
+    requestingWindow = wind;
   }
-  return true;
-});
-chrome.extension.onConnect.addListener(function(port) {
-  port.onMessage.addListener(function(message) {
-    switch(port.name) {
-      case "color-divs-port":
-        colorDivs();
-        break;
+}
+
+chrome.app.runtime.onLaunched.addListener(function() {
+  chrome.app.window.create("index.html", {
+    resizable: false,
+    frame: 'none',
+    id: "index",
+    innerBounds: {
+      width: 640,
+      height: 635
+    }
+  }, function(newWindow) {
+    if (newWindow.contentWindow != wind) {
+      newWindow.contentWindow.onload = onWindowLoad;
+      newWindow.onClosed.addListener(function() {
+        wind = null;
+      });
     }
   });
 });
 
-// send a message to the content script
-var colorDivs = function() {
-  chrome.tabs.getSelected(null, function(tab){
-    chrome.tabs.sendMessage(tab.id, {type: "colors-div", color: "#F00"});
-    // setting a badge
-    chrome.browserAction.setBadgeText({text: "red!"});
-  });
-};
-
+/*
+chrome.syncFileSystem.requestFileSystem(function(syncFs) {
+  fs = syncFS;
+  if (requestingWindow) {
+    requestingWindow.onCreatedFileSystem(fs);
+  }
+});*/
