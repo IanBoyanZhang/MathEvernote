@@ -5,7 +5,8 @@
   "description": "Description ",
   "omnibox": { "keyword": "yeah " },
   "browser_action": {
-    "default_title": "Basic tool setup"
+    "default_title": "Basic tool setup",
+    "default_popup": "popup.html"
   },
   "background": {
     "scripts": ["background.js"],
