@@ -1,9 +1,16 @@
 {
   "name": "Latex Evernote Extension",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 2,
-  "description": "Description ",
+  "description": "Parse user LaTeX input then dynamically render to math expression",
   "omnibox": { "keyword": "yeah " },
+  "minimum_chrome_version": "23",
+  "icons": {
+    "16": "icons/texteditor_16.png",
+    "24": "icons/texteditor_24.png",
+    "48": "icons/texteditor_48.png",
+    "128": "icons/texteditor_128.png"
+  },
   "browser_action": {
     "default_title": "Basic tool setup",
     "default_popup": "popup.html"
