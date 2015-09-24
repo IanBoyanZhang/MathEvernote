@@ -2,7 +2,20 @@
   "name": "Latex Evernote Extension",
   "version": "0.0.1",
   "manifest_version": 2,
+  "description": "Description ",
+  "omnibox": { "keyword": "yeah " },
   "browser_action": {
     "default_title": "Basic tool setup"
-  }
+  },
+  "background": {
+    "scripts": [],
+    "persistent": false
+  },
+  "chrome_url_overrides": {
+  },
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["content.js"]
+  }],
+  "devtools_page": "devtools/devtools.html"
 }
