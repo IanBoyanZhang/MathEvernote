@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "description": "Parse user LaTeX input then dynamically render to math expression",
   "omnibox": { "keyword": "evernote" },
-  "minimum_chrome_version": "28",
+  "minimum_chrome_version": "23",
   "offline_enabled": true,
   "icons": {
     "16": "icons/texteditor_16.png",
@@ -12,17 +12,24 @@
     "48": "icons/texteditor_48.png",
     "128": "icons/texteditor_128.png"
   },
-  "app": {
-    "background": {
-      "scripts": ["background.js"],
-      "persistent": false
-    }
+  "browser_action": {
+    "default_icon": {
+      "16": "icons/texteditor_16.png"
+    },
+    "default_title": "It's a title",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
   },
     "chrome_url_overrides": {
   },
+//  "content_security_policy": "default-src 'self' ",
   "content_scripts": [{
     "matches": ["http://*/*", "https://*/*"],
-    "js": ["content.js"]
+    "js": ["content.js"],
+    "run_at": "document_idle"            // Pay attention to this line?
   }],
   "devtools_page": "devtools/devtools.html"
 }
