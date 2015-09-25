@@ -16,7 +16,8 @@
     "default_icon": {
       "16": "icons/texteditor_16.png"
     },
-    "default_title": "It's a title"
+    "default_title": "It's a title",
+    "default_popup": "popup.html"
   },
   "background": {
     "scripts": ["background.js"],
@@ -24,6 +25,7 @@
   },
     "chrome_url_overrides": {
   },
+//  "content_security_policy": "default-src 'self' ",
   "content_scripts": [{
     "matches": ["http://*/*", "https://*/*"],
     "js": ["content.js"],
