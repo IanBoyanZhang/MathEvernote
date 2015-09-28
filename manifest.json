@@ -28,11 +28,13 @@
 //  "content_security_policy": "default-src 'self' ",
   "content_scripts": [{
     "matches": ["http://*/*", "https://*/*"],
-    "js": ["content.js"]
+    "js": ["content.js", "execution.js"]
 //    "run_at": "document_end"            // Pay attention to this line?
   }],
+  "web_accessible_resources": ["execution.js"],
   "permissions": [                      // Scripting security?
     "tabs", "http://*/*", "https://*/*"
+//    "storage"
   ],
   "devtools_page": "devtools/devtools.html"
 }

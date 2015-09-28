@@ -2,6 +2,7 @@
 // Polling in 1000 ms to check if the document is ready;
 // TODO: match link script url with target url
 // User webworker to monitor app state at background
+// TODO: Match tab for different notes or press button
 var dev = true;
 
 (function() {
@@ -10,34 +11,48 @@ var dev = true;
 var injectRenderEngine = function(userDom) {
   var renderEngineTag = userDom.getElementById('katex');
   if (renderEngineTag === null) {
+    /*
     var renderEngineDiv = userDom.createElement('div');
     renderEngineDiv.style.visiblity = "hidden";
     renderEngineDiv.id="katex";
-    userDom.body.insertBefore(renderEngineDiv, userDom.body.firstChild);
+    userDom.body.insertBefore(renderEngineDiv, userDom.body.firstChild);*/
+    // inject render engine style
+    var renderEngineStyle = userDom.createElement('link');
+    renderEngineStyle.rel = "stylesheet";
+    renderEngineStyle.href = "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.css";
+    userDom.head.appendChild(renderEngineStyle);
     // inject render engine script
     var renderEngineScript = userDom.createElement('script');
     renderEngineScript.type = "text/javascript";
     renderEngineScript.src = "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.js";
     userDom.head.appendChild(renderEngineScript);
-    // inject render engine style
-    var renderEngineStyle = userDom.createElement('link');
-    renderEngineScript.rel = "stylesheet";
-    renderEngineStyle.href = "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.cs";
-    userDom.head.appendChild(renderEngineStyle);
   }
   // create a newTextNode
+  /*
   var newNode = userDom.createElement('div');
   var textNode = userDom.createTextNode("Hello World");
   newNode.appendChild(textNode);
-  userDom.body.appendChild(newNode);
+  userDom.body.appendChild(newNode);*/
   if (dev) { console.log(userDom); }
 };
+
+var injectRenderScript = function(userDom) {
+  var renderExecScript = userDom.createElement("script");
+  renderExecScript.type = "text/javascript";
+  renderExecScript.src = chrome.extension.getURL("execution.js");
+/*  renderExecScript.onload = function() {
+    this.parentNode.removeChild(this);
+  };*/
+  //(userDom.head || userDom.documentElement).appendChild(renderExecScript);
+  (userDom.body || userDom.documentElement).appendChild(renderExecScript);
+  // console.log(renderExecScript);
+};
+
 
 // Parsing user input with input 
 var parsingDom = function(userDom) {
   // var newNode = document.createElement( 'div' );
   // userDom.appendChild(newNode);
-  // Get all div
   var children = userDom.childNodes;
   console.log(children);
 /*  for (var i = 0; i < children.length; i++) {
@@ -45,7 +60,6 @@ var parsingDom = function(userDom) {
     console.log(children[i].innerHTML);
   }
 */  
-  // create a new div then verify creation is successful
 
 };
 
@@ -73,6 +87,7 @@ var pollState = function() {
 //      parsingDom(dom);
       injectRenderEngine(dom);
 //      getUserContentInHTML(dom);
+      injectRenderScript(dom);
     }
   }
 };
