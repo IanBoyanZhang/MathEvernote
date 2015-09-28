@@ -14,18 +14,29 @@ var injectRenderEngine = function(userDom) {
     renderEngineDiv.style.visiblity = "hidden";
     renderEngineDiv.id="katex";
     userDom.body.insertBefore(renderEngineDiv, userDom.body.firstChild);
+    // inject render engine script
     var renderEngineScript = userDom.createElement('script');
     renderEngineScript.type = "text/javascript";
-    userDom.body.appendChild(renderEngineScript);
-//    console.log(userDom.getElementById('katex'));
+    renderEngineScript.src = "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.js";
+    userDom.head.appendChild(renderEngineScript);
+    // inject render engine style
+    var renderEngineStyle = userDom.createElement('link');
+    renderEngineScript.rel = "stylesheet";
+    renderEngineStyle.href = "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.cs";
+    userDom.head.appendChild(renderEngineStyle);
   }
-//  console.log(userDom);
+  // create a newTextNode
+  var newNode = userDom.createElement('div');
+  var textNode = userDom.createTextNode("Hello World");
+  newNode.appendChild(textNode);
+  userDom.body.appendChild(newNode);
+  if (dev) { console.log(userDom); }
 };
 
 // Parsing user input with input 
 var parsingDom = function(userDom) {
-  var newNode = document.createElement( 'div' );
-  userDom.appendChild(newNode);
+  // var newNode = document.createElement( 'div' );
+  // userDom.appendChild(newNode);
   // Get all div
   var children = userDom.childNodes;
   console.log(children);
