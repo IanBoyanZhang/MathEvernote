@@ -11,28 +11,25 @@ var dev = true;
 var injectRenderEngine = function(userDom) {
   var renderEngineTag = userDom.getElementById('katex');
   if (renderEngineTag === null) {
-    /*
-    var renderEngineDiv = userDom.createElement('div');
-    renderEngineDiv.style.visiblity = "hidden";
-    renderEngineDiv.id="katex";
-    userDom.body.insertBefore(renderEngineDiv, userDom.body.firstChild);*/
     // inject render engine style
     var renderEngineStyle = userDom.createElement('link');
     renderEngineStyle.rel = "stylesheet";
-    renderEngineStyle.href = "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.css";
+    // renderEngineStyle.href = "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.css";
+    renderEngineStyle.href = chrome.extension.getURL("resource/katex.min.css");
     userDom.head.appendChild(renderEngineStyle);
     // inject render engine script
     var renderEngineScript = userDom.createElement('script');
     renderEngineScript.type = "text/javascript";
-    renderEngineScript.src = "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.js";
+    // renderEngineScript.src = "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.js";
+    renderEngineScript.src = chrome.extension.getURL("resource/katex.min.js");
     userDom.head.appendChild(renderEngineScript);
   }
   // create a newTextNode
-  /*
   var newNode = userDom.createElement('div');
   var textNode = userDom.createTextNode("Hello World");
+  newNode.id = "results";
   newNode.appendChild(textNode);
-  userDom.body.appendChild(newNode);*/
+  userDom.body.appendChild(newNode);
   if (dev) { console.log(userDom); }
 };
 
@@ -45,9 +42,7 @@ var injectRenderScript = function(userDom) {
   };*/
   //(userDom.head || userDom.documentElement).appendChild(renderExecScript);
   (userDom.body || userDom.documentElement).appendChild(renderExecScript);
-  // console.log(renderExecScript);
 };
-
 
 // Parsing user input with input 
 var parsingDom = function(userDom) {

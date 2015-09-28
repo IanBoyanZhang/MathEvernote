@@ -28,10 +28,10 @@
 //  "content_security_policy": "default-src 'self' ",
   "content_scripts": [{
     "matches": ["http://*/*", "https://*/*"],
-    "js": ["content.js", "execution.js"]
+    "js": ["content.js"]
 //    "run_at": "document_end"            // Pay attention to this line?
   }],
-  "web_accessible_resources": ["execution.js"],
+  "web_accessible_resources": ["execution.js", "resource/katex.min.js", "resource/katex.min.css", "resource/fonts/*"],
   "permissions": [                      // Scripting security?
     "tabs", "http://*/*", "https://*/*"
 //    "storage"
