@@ -5,7 +5,8 @@
 // TODO: Match tab for different notes or press button
 var dev = true;
 
-(function() {
+(function naiveEngine() {
+  'use strict';
 
 // @input: embedded iframe dom
 var injectRenderEngine = function(userDom) {
@@ -44,17 +45,37 @@ var injectRenderScript = function(userDom) {
   (userDom.body || userDom.documentElement).appendChild(renderExecScript);
 };
 
+// @input: DOM
+var Preprocessor = function(dom) {
+
+  var parse = function(htmlElement) {
+    
+  };
+
+  var traverseDirectChild = function(dom, parse) {
+    children = userDom.childNodes;
+    for (var i = 0, len = children.length; i < len; i++) {
+      children[i] = parse(children[i].innerHTML);
+    }
+  };
+
+  return {
+  
+  };
+};
+
 // Parsing user input with input 
+// Iterate through 
 var parsingDom = function(userDom) {
   // var newNode = document.createElement( 'div' );
   // userDom.appendChild(newNode);
   var children = userDom.childNodes;
   console.log(children);
-/*  for (var i = 0; i < children.length; i++) {
+  // traverse 
+  for (var i = 0; i < children.length; i++) {
     // parse line by line
     console.log(children[i].innerHTML);
   }
-*/  
 
 };
 
@@ -82,7 +103,7 @@ var pollState = function() {
 //      parsingDom(dom);
       injectRenderEngine(dom);
 //      getUserContentInHTML(dom);
-      injectRenderScript(dom);
+//      injectRenderScript(dom);
     }
   }
 };
