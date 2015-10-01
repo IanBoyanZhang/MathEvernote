@@ -8,6 +8,34 @@ var dev = true;
 (function naiveEngine() {
   'use strict';
 
+var dev = true;
+
+var Lexer = function() {
+  var lexer = function(input) {
+    var EOF = "EOF";
+    var whitespaceRegex = /\s*/;
+    var whitespaceContactRegex = / +|\\  +/;
+    var rmWhitespaceRegex = /[^\s]+/g;          // /[^s]+/g global or not?
+    // This regex matches any other TeX function, which is a backslash followed by a word or a single symbol
+    var anyFunc = /\\(?:[a-zA-Z]+|.)/; 
+    // var mathModeBling=/(\$([^\$]*)\$)/g;                // /g to avoid infinite loop
+    var mathModeBling=/(\$([^\$]*)\$)/g;                // /g to avoid infinite loop
+    var result;
+    var tokens = [];
+    while((result = mathModeBling.exec(input)) !== null) {
+      if (result.index === mathModeBling.lastIndex) {
+        mathModeBling.lastIndex++;
+      }
+      if (dev) { console.log(result[2]); }
+      // now call the translate engine to translate that onto screen
+      tokens.push(result[2]);
+    }
+    return tokens;
+  };
+  return lexer;
+};
+
+
 // @input: embedded iframe dom
 var injectRenderEngine = function(userDom) {
   var renderEngineTag = userDom.getElementById('katex');
@@ -46,37 +74,23 @@ var injectRenderScript = function(userDom) {
 };
 
 // @input: DOM
-var Preprocessor = function(dom) {
-
-  var parse = function(htmlElement) {
-    
-  };
-
-  var traverseDirectChild = function(dom, parse) {
-    children = userDom.childNodes;
+var Preprocessor = function(userDom) {
+  var lexer = new Lexer();
+  var traverseDirectChild = function(dom, lexer) {
+    var tokens;
+    var children = userDom.childNodes;
     for (var i = 0, len = children.length; i < len; i++) {
-      children[i] = parse(children[i].innerHTML);
+  //    console.log(children[i].innerHTML);
+      tokens = lexer(children[i].innerHTML);
+      // now processor tokens
     }
   };
-
+  
+  traverseDirectChild(userDom, lexer);
+  /*
   return {
   
-  };
-};
-
-// Parsing user input with input 
-// Iterate through 
-var parsingDom = function(userDom) {
-  // var newNode = document.createElement( 'div' );
-  // userDom.appendChild(newNode);
-  var children = userDom.childNodes;
-  console.log(children);
-  // traverse 
-  for (var i = 0; i < children.length; i++) {
-    // parse line by line
-    console.log(children[i].innerHTML);
-  }
-
+  };*/
 };
 
 var getUserContentInHTML = function(dom) {
@@ -100,8 +114,8 @@ var pollState = function() {
       // create new div
       console.log("Not Ready yet!");
     } else {
-//      parsingDom(dom);
       injectRenderEngine(dom);
+      Preprocessor(dom);
 //      getUserContentInHTML(dom);
 //      injectRenderScript(dom);
     }
