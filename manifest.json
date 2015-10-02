@@ -32,7 +32,8 @@
 //    "run_at": "document_end"            // Pay attention to this line?
   }],
   "web_accessible_resources": 
-  ["execution.js", "resource/katex.min.js", "resource/katex.min.css", "resource/fonts/*"
+  ["execution.js", "resource/katex.min.js", "resource/katex.min.css", "resource/fonts/*",
+    "resource/html2canvas.js"
   ],
   "permissions": [                      // Scripting security?
     "tabs", "http://*/*", "https://*/*"
