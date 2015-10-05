@@ -11,9 +11,14 @@
     dom.head.appendChild(_script);
   };
 
-  var execFunc = function execFunc(dom) {
+  var injectStylesheet = function injectStylesheet(file, dom) {
+    var _link = document.createElement('link');
+    _link.rel = "stylesheet";
+    _link.href= chrome.extention.getURL(file);
+    dom.head.appendChild(_link);
   };
+
   exports.utility.extentionBaseURL = chrome.extension.getURL("");
-  exports.utility.execFunc = execFunc;
   exports.utility.injectScript = injectScript;
+  exports.utility.injectStylesheet = injectStylesheet;
 })(this);

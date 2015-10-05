@@ -19,8 +19,12 @@
     window.clearTimeout(waitEditor);
   }, 2000);
 
-  var renderCB = function() {
-  
+  var renderCB = function(node) {
+    // render the node with picture
+    // 1. render html with katex
+    // 2. take canvas snap shot
+    // 3. remove katex rendered object
+
   };
 
   var processor = function(textNode, renderCB) {
