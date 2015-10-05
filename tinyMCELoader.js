@@ -42,16 +42,11 @@
   };
 
   var exec = function() {
-  //  console.log(editor.selection.getRng().textContent);
-//    editor.execCommand('mceInsertContent', false, "my some text");
-//    editor.execCommand('mceInsertRawHTML', false, "<br clear='none'>");       // create new line
     console.log(editor.selection.getRng().endOffset);
     console.log(editor.selection.getRng());
     // Set up event listener
     editorBody.addEventListener('keydown', function(e) {
       if (document.activeElement === editorBody) {
-        // console.log(e.keyCode);
-        // check current cursor location
         processor(window.getSelection().focusNode);
       }
     });
