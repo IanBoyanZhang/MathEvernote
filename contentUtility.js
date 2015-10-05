@@ -14,7 +14,7 @@
   var injectStylesheet = function injectStylesheet(file, dom) {
     var _link = document.createElement('link');
     _link.rel = "stylesheet";
-    _link.href= chrome.extention.getURL(file);
+    _link.href= chrome.extension.getURL(file);
     dom.head.appendChild(_link);
   };
 

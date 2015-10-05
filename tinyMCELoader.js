@@ -1,6 +1,6 @@
 // New line events need to detect
 // 1. newline "<br clear='none'>"
-// 2. return enter code 13
+// 2. return/enter code 13
 // 3. reach maximum width // or interpret them as same line? just paste the image?
 
 // TODO: checkCurrentCursor // caret position
@@ -19,12 +19,23 @@
     window.clearTimeout(waitEditor);
   }, 2000);
 
-  var renderCB = function(node) {
+  var render = function(node) {
     // render the node with picture
     // 1. render html with katex
     // 2. take canvas snap shot
     // 3. remove katex rendered object
 
+    // render.kate
+    if (node.nodeValue !== null) {
+      // create node in tinyMCE fashion
+      var htmlContent = katex.renderToString("c = \\pm\\sqrt{a^2 + b^2}", {displayMode: false});
+      var elem = document.createElement("div");
+      elem.innerHTML = htmlContent;
+//      editor.selection.setContent(htmlContent, {format: 'raw'});
+//      console.log(editor.dom.select('div')[0]);
+      console.log(editor.selection.getNode());
+//      console.log(editor.selection.setNode(elem));
+    }
   };
 
   var processor = function(textNode, renderCB) {
@@ -34,29 +45,29 @@
     if (textVal === null) {
       return "<br clear='none'>";
     }
+    
     if (typeof textVal !== 'string') {
       return null;
     }
+
     while((result = mathModeBling.exec(textVal)) !== null) {
       if (result.index === mathModeBling.lastIndex) {
         mathModeBling.lastIndex++;
       }
-      // use setContent?
-      // setPositon first then update the dom value
-      // console.log(result[1]);
-      // textVal = textVal.replace(result[1], "butt");
       textNode.nodeValue = textVal;
+//      renderCB(textNode);
     }
+    renderCB(textNode);
   };
 
   var exec = function() {
-    console.log(editor.selection.getRng().endOffset);
-    console.log(editor.selection.getRng());
+//    console.log(editor.selection.getRng().endOffset);
+//    console.log(editor.selection.getRng());
     // Set up event listener
     editorBody.addEventListener('keydown', function(e) {
       if (document.activeElement === editorBody) {
-        // processor(editor.selection.getNode())
-        processor(window.getSelection().focusNode);
+//        processor(editor.selection.getNode(), render);
+        processor(window.getSelection().focusNode, render);
       }
     });
     // add event listener for mouse actions
