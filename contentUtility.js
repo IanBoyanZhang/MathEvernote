@@ -9,10 +9,12 @@
     _script.setAttribute('type', 'text/javascript');
     _script.setAttribute('src', chrome.extension.getURL(file));
     dom.head.appendChild(_script);
+//    console.log(utility.extentionBaseURL);
   };
 
   var execFunc = function execFunc(dom) {
   };
+  exports.utility.extentionBaseURL = chrome.extension.getURL("");
   exports.utility.execFunc = execFunc;
   exports.utility.injectScript = injectScript;
 })(this);

@@ -34,6 +34,7 @@
   "web_accessible_resources": 
   ["resource/katex.min.js", "resource/katex.min.css", "resource/fonts/*",
     "resource/html2canvas.js",
+    "js/tinymce/*",
     "tinyMCELoader.js",
     "contentUtility.js"
   ],
