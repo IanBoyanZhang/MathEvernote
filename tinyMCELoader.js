@@ -19,7 +19,11 @@
     window.clearTimeout(waitEditor);
   }, 2000);
 
-  var processor = function(textNode) {
+  var renderCB = function() {
+  
+  };
+
+  var processor = function(textNode, renderCB) {
     var mathModeBling=/(\$([^\$]*)\$)/g;                // /g to avoid infinite loop
     var result;
     var textVal = textNode.nodeValue;
@@ -36,7 +40,7 @@
       // use setContent?
       // setPositon first then update the dom value
       // console.log(result[1]);
-      textVal = textVal.replace(result[1], "butt");
+      // textVal = textVal.replace(result[1], "butt");
       textNode.nodeValue = textVal;
     }
   };
@@ -47,6 +51,7 @@
     // Set up event listener
     editorBody.addEventListener('keydown', function(e) {
       if (document.activeElement === editorBody) {
+        // processor(editor.selection.getNode())
         processor(window.getSelection().focusNode);
       }
     });

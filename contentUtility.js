@@ -9,7 +9,6 @@
     _script.setAttribute('type', 'text/javascript');
     _script.setAttribute('src', chrome.extension.getURL(file));
     dom.head.appendChild(_script);
-//    console.log(utility.extentionBaseURL);
   };
 
   var execFunc = function execFunc(dom) {

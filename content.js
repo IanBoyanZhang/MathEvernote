@@ -1,5 +1,4 @@
 var dev = true;
-// execFunc is in global context
 (function naiveEngine(exports) {
   'use strict';
 
@@ -12,17 +11,18 @@ var dev = true;
     return fr.contentWindow.document;
   };
   var nestedDom = null;
+  // file paths
   var tinyMCELoaderPath = "tinyMCELoader.js";
+  var html2canvasPath = "js/html2canvas.js";
 
   // Polling in 100ms
   var checkExist = window.setInterval(function() {
     var nodeId = iframe;
     if ($id(nodeId) !== null) {
-      console.log("node exists!");
       // newDom
       nestedDom = $dom($id(nodeId));
-      console.log($dom($id(nodeId)).body);
-      utility.injectScript(tinyMCELoaderPath, nestedDom);
+      utility.injectScript(tinyMCELoaderPath, nestedDom);       // editor script
+      utility.injectScript(html2canvasPath, nestedDom);         // html2canvas
       window.clearInterval(checkExist);
     }
   }, 100);
