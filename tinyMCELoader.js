@@ -4,6 +4,7 @@
   var editorId = "entinymce_328"; 
   var tinymce = window.parent.tinymce;
   var editor = window.parent.tinymce.get(editorId);
+  var editorBody = editor.getBody();
   // console.log(tinymce.get("entinymce_328").plugins);
   console.log(tinymce.get("entinymce_328"));
 
@@ -29,17 +30,13 @@
     // if event loop comes back detects the current line change or newline
     // Version 1 detects newline only
 
-    // main Event loop 
-/*    var EmuEventLoop = window.setInterval(function() {
-      if (EmuCounter) {
-        EmuCounter--;
-        console.log(editor.selection.getRng().endOffset);
-        console.log("Where is focus?", document.activeElement);
-      } else {
-        window.clearInterval(EmuEventLoop);
+   // Set up event listener
+    editorBody.addEventListener('keydown', function(e) {
+      if (document.activeElement === editorBody) {
+        console.log(e.keyCode);
       }
-    },1000);*/
-
+//      console.log("Which key is down?",e.keyCode);
+    });
   };
 
   // implement your event loop while true
