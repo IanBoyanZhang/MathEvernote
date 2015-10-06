@@ -41,10 +41,9 @@
     /*
      * @input node internal html
      */
-    var wordReplacer = function(nodeText, regexResult) {
-//      var _innerText = node.nodeValue;
-      nodeText = nodeText.replace(regexResult[1], "");
-      return nodeText;
+    var wordReplacer = function(node, regexResult) {
+      var _innerText = node.nodeValue.replace(regexResult[1], "");
+      return _innerText;
     };
 
     if (textVal === null) {
@@ -60,7 +59,8 @@
         mathModeBling.lastIndex++;
       }
 
-      textVal = wordReplacer(textVal, result);
+      textVal = wordReplacer(textNode, result);
+      textNode.nodeValue = textVal;
       renderCB(textNode);
     }
   };
