@@ -13,7 +13,6 @@
   console.log(tinymce.get("entinymce_328"));
 
   var inputTextCache = "";
-  // plug-in contents
   var waitEditor = window.setTimeout(function() {
     exec();
     window.clearTimeout(waitEditor);
@@ -25,23 +24,29 @@
     // 2. take canvas snap shot
     // 3. remove katex rendered object
 
-    // render.kate
     if (node.nodeValue !== null) {
       // create node in tinyMCE fashion
       var htmlContent = katex.renderToString("c = \\pm\\sqrt{a^2 + b^2}", {displayMode: false});
       var elem = document.createElement("div");
       elem.innerHTML = htmlContent;
-//      editor.selection.setContent(htmlContent, {format: 'raw'});
-//      console.log(editor.dom.select('div')[0]);
-      console.log(editor.selection.getNode());
-//      console.log(editor.selection.setNode(elem));
+      console.log(editor.selection.setNode(elem));
     }
   };
 
   var processor = function(textNode, renderCB) {
-    var mathModeBling=/(\$([^\$]*)\$)/g;                // /g to avoid infinite loop
+    var mathModeBling=/(\$([^\$]*)\$)/g;
     var result;
     var textVal = textNode.nodeValue;
+
+    /*
+     * @input node internal html
+     */
+    var wordReplacer = function(nodeText, regexResult) {
+//      var _innerText = node.nodeValue;
+      nodeText = nodeText.replace(regexResult[1], "");
+      return nodeText;
+    };
+
     if (textVal === null) {
       return "<br clear='none'>";
     }
@@ -54,10 +59,10 @@
       if (result.index === mathModeBling.lastIndex) {
         mathModeBling.lastIndex++;
       }
-      textNode.nodeValue = textVal;
-//      renderCB(textNode);
+
+      textVal = wordReplacer(textVal, result);
+      renderCB(textNode);
     }
-    renderCB(textNode);
   };
 
   var exec = function() {
