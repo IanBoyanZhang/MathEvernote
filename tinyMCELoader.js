@@ -20,15 +20,20 @@
 
   var render = function(node) {
     // render the node with picture
-    // 1. render html with katex
     // 2. take canvas snap shot
-    // 3. remove katex rendered object
 
     if (node.nodeValue !== null) {
       // create node in tinyMCE fashion
       var htmlContent = katex.renderToString("c = \\pm\\sqrt{a^2 + b^2}", {displayMode: false});
       var elem = document.createElement("div");
       elem.innerHTML = htmlContent;
+      // convert elem to canvas
+      html2canvas(elem, {
+        onrendered: function(canvas) {
+//          var canvasImg = canvas.toData
+          console.log(canvas);
+        }
+      });
       console.log(editor.selection.setNode(elem));
     }
   };
@@ -66,12 +71,9 @@
   };
 
   var exec = function() {
-//    console.log(editor.selection.getRng().endOffset);
-//    console.log(editor.selection.getRng());
     // Set up event listener
     editorBody.addEventListener('keydown', function(e) {
       if (document.activeElement === editorBody) {
-//        processor(editor.selection.getNode(), render);
         processor(window.getSelection().focusNode, render);
       }
     });
