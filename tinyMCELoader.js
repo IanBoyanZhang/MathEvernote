@@ -4,8 +4,8 @@
 // 3. reach maximum width // or interpret them as same line? just paste the image?
 
 // TODO: checkCurrentCursor // caret position
-// TODO: Escape from back slash
-// TODO: Fix html2canvas
+// TODO: Escape from back slash?
+// TODO: set up correct canvas height/width, currently, too tall for the line break
 // TODO: Add mouse action
 (function(exports) {
   'use strict';
@@ -23,18 +23,15 @@
 
   var render = function(buildNode, regexResult) {
     if (buildNode.nodeValue !== null) {
-      // create node in tinyMCE fashion
-      // var htmlContent = katex.renderToString("c = \\pm\\sqrt{a^2 + b^2}", {displayMode: false});
-      console.log(typeof regexResult[1]);
       var htmlContent = katex.renderToString(regexResult[2], {displayMode: false});
       var elem = document.createElement("div");
       elem.innerHTML = htmlContent;
-      // convert elem to canvas
       editor.selection.setNode(elem);
-      html2canvas(elem, {
+      html2canvas(editor.selection.getNode(), {
         onrendered: function(canvas) {
-          console.log(canvas);
-//          editor.selection.setNode(elem);
+          var dataURL = canvas.toDataURL('image/png');
+          console.log(dataURL);
+          editor.selection.setNode(editor.dom.create('img', {src: dataURL}));
         }
       });
     }
@@ -66,9 +63,9 @@
         mathModeBling.lastIndex++;
       }
 
-      renderCB(textNode, result);
       textVal = wordReplacer(textNode, result);
       textNode.nodeValue = textVal;
+      renderCB(textNode, result);
     }
   };
 
